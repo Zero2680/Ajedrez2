@@ -13,7 +13,7 @@ gs = GameState()
 validMoves = gs.getValidMoves() #movimientos válidos
 moveMade = False #variable que permite o no hacer el movimiento
 sqSelected = () #ultimo click del jugador
-playerClicks= [] #lista con los dos clicks del jugador
+playerClicks = [] #lista con los dos clicks del jugador
 
 
 #DIBUJAR TABLERO // f = fila, c = columna
@@ -22,7 +22,7 @@ def dibujarTablero(screen):
 	for f in range(dimensiones):
 		for c in range(dimensiones):
 			color = colores[((f+c) % 2)]
-			draw.rect(screen, color, Rect(c*sq_size, f*sq_size, sq_size, sq_size))
+			draw.rect(screen, color, Rect(c*sq_size + 280, f*sq_size, sq_size, sq_size))
 
 
 #CARGAR IMAGENES
@@ -38,7 +38,7 @@ def dibujarPiezas(screen, tablero):
 		for c in range(dimensiones):
 			pieza = tablero[f][c]
 			if pieza != "--":
-				screen.blit(IMAGES[pieza], Rect(c*sq_size, f*sq_size, sq_size, sq_size))
+				screen.blit(IMAGES[pieza], Rect(c*sq_size + 280, f*sq_size, sq_size, sq_size))
 
 loadImages()
 
@@ -53,7 +53,7 @@ while encendido:
 			#PULSAR RATÓN (MOVER PIEZAS)
 			elif evento.type==MOUSEBUTTONDOWN:
 				location = mouse.get_pos()
-				columna = location[0]//sq_size
+				columna = (location[0] - 280)//sq_size
 				fila = location[1]//sq_size
 				if sqSelected == (fila,columna): #click dos veces en la misma casilla
 					sqSelected = ()
@@ -94,10 +94,10 @@ while encendido:
 	elif gs.finish == True:
 		if gs.white_wins == True:
 			white_wins = transform.scale(image.load("ajedrez2_images/white_wins.png"), (500, 500))
-			screen.blit(white_wins, (110,110))
+			screen.blit(white_wins, (390,110))
 		elif gs.black_wins == True:
 			black_wins = transform.scale(image.load("ajedrez2_images/black_wins.png"), (500, 500))
-			screen.blit(black_wins, (110,110))
+			screen.blit(black_wins, (390,110))
 		for evento in event.get():
 			if evento.type==QUIT:
 				encendido=False
